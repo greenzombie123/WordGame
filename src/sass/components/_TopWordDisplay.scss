@@ -1,0 +1,27 @@
+.topWordDisplay {
+  padding: 0 5px;
+  border: 10px black solid;
+
+  .topWordDisplay_word {
+    font-size: 4.3rem;
+    font-weight: bolder;
+    opacity: 0;
+    transform: translateX(-50px);
+    text-align: center;
+    transition: all .8s;
+
+    &.fadein {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+
+    // &.fadeout {
+    //     opacity: 0;
+    //     transform: translateX(50px);
+    //   }
+  }
+
+  & ~ .wordGame_bottom{
+    padding: 5px 100px 10px 0;
+  }
+}

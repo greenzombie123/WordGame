@@ -1,0 +1,914 @@
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+/*
+  Typographic tweaks!
+  3. Add accessible line-height
+  4. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+html * {
+  font-size: 16px;
+}
+
+#root {
+  height: 100%;
+}
+
+/*
+  5. Improve media defaults
+*/
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+  6. Remove built-in form typography styles
+*/
+input, button, textarea, select {
+  font: inherit;
+}
+
+/*
+  7. Avoid text overflows
+*/
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/*
+  8. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+.App {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: end;
+  height: 100%;
+}
+
+.App footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+  height: 50px;
+}
+
+.App footer a {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  height: 30px;
+  color: black;
+  text-decoration: none;
+}
+
+.App footer a img {
+  height: 100%;
+  border-radius: 50%;
+}
+
+.optionContainer .buttonContainer .returnButton, .textInputGroup > .addButtonContainer > .addButton, .buttonPanel button, .wordGame .wordGame_bottom .mainMenuButton, .wordGame .wordGame_bottom .slideShowButton, .slideShow .slideShow_bottom button, .MainMenu .buttonContainer > .finishButton,
+.MainMenu .buttonContainer > .optionButton {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1a1a1a;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3b3b3b;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+.optionContainer .buttonContainer .returnButton:disabled, .textInputGroup > .addButtonContainer > .addButton:disabled, .buttonPanel button:disabled, .wordGame .wordGame_bottom .mainMenuButton:disabled, .wordGame .wordGame_bottom .slideShowButton:disabled, .slideShow .slideShow_bottom button:disabled, .MainMenu .buttonContainer > .finishButton:disabled,
+.MainMenu .buttonContainer > .optionButton:disabled {
+  pointer-events: none;
+}
+
+.optionContainer .buttonContainer .returnButton:hover, .textInputGroup > .addButtonContainer > .addButton:hover, .buttonPanel button:hover, .wordGame .wordGame_bottom .mainMenuButton:hover, .wordGame .wordGame_bottom .slideShowButton:hover, .slideShow .slideShow_bottom button:hover, .MainMenu .buttonContainer > .finishButton:hover,
+.MainMenu .buttonContainer > .optionButton:hover {
+  color: #fff;
+  background-color: #1a1a1a;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.optionContainer .buttonContainer .returnButton:active, .textInputGroup > .addButtonContainer > .addButton:active, .buttonPanel button:active, .wordGame .wordGame_bottom .mainMenuButton:active, .wordGame .wordGame_bottom .slideShowButton:active, .slideShow .slideShow_bottom button:active, .MainMenu .buttonContainer > .finishButton:active,
+.MainMenu .buttonContainer > .optionButton:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.modal_goodJobDisplay, .modal_OptionDisplay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  color: gold;
+}
+
+.MainMenu {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 25px;
+  height: 100%;
+}
+
+.MainMenu .MainMenu_top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  width: 100%;
+}
+
+.MainMenu .MainMenu_top .inputContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 2rem;
+  flex: 1;
+}
+
+.MainMenu .buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex: 0;
+  padding: 20px 0;
+  gap: 100px;
+}
+
+.slides {
+  display: flex;
+  flex-flow: row nowrap;
+  width: fit-content;
+  height: 100%;
+  transition: transform 1s;
+}
+
+.slides .wordSlide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1600px;
+  height: 100%;
+}
+
+.slides .wordSlide .flipcard {
+  min-width: 50%;
+  height: 80%;
+  perspective: 1000px;
+}
+
+.slides .wordSlide .flipcard.flipped > .flipcard_inner {
+  transform: rotateY(180deg);
+}
+
+.slides .wordSlide .flipcard .flipcard_inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.slides .wordSlide .flipcard .flipcard_inner .flipcard_front,
+.slides .wordSlide .flipcard .flipcard_inner .flipcard_back {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  font-size: 12rem;
+}
+
+.slides .wordSlide .flipcard .flipcard_inner .flipcard_front img,
+.slides .wordSlide .flipcard .flipcard_inner .flipcard_back img {
+  height: 100%;
+}
+
+.slides .wordSlide .flipcard .flipcard_inner .flipcard_back {
+  transform: rotateY(180deg);
+}
+
+.slideShow {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.slideShow .slideShow_top {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  flex: 1;
+}
+
+.slideShow .slideShow_top .slideShowButton_left {
+  height: 0;
+  width: 0;
+  border-left: 0px solid greenyellow;
+  border-right: 100px solid greenyellow;
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  background-color: transparent;
+}
+
+.slideShow .slideShow_top .slidesContainer {
+  width: 1600px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slideShow .slideShow_top .slideShowButton_right {
+  height: 0;
+  width: 0;
+  border-left: 100px solid greenyellow;
+  border-right: 0 solid greenyellow;
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  background-color: transparent;
+}
+
+.slideShow .slideShow_bottom {
+  display: flex;
+  justify-content: left;
+  padding: 40px 0;
+  padding-left: 100px;
+}
+
+.scoreBoard {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background-color: rgba(46, 46, 46, 0.96);
+  padding: 15px 10px;
+}
+
+.scoreBoard .star_4 {
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background-color: gray;
+  height: 150px;
+  width: 150px;
+}
+
+.scoreBoard .star_5 {
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background-color: gray;
+  height: 120px;
+  width: 120px;
+}
+
+.scoreBoard .star_6 {
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background-color: gray;
+  height: 100px;
+  width: 100px;
+}
+
+.scoreBoard .star_7 {
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background-color: gray;
+  height: 80px;
+  width: 80px;
+}
+
+.scoreBoard .star_8 {
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background-color: gray;
+  height: 70px;
+  width: 70px;
+}
+
+.scoreBoard .star_9 {
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background-color: gray;
+  height: 60px;
+  width: 60px;
+}
+
+.scoreBoard .highlighted {
+  background-color: gold;
+}
+
+.wordGame {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: stretch;
+  height: 100%;
+}
+
+.wordGame .wordGame_top {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.wordGame .wordGame_top .wordGame_container {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  background-color: rgb(221, 217, 217);
+}
+
+.wordGame .wordGame_top .scoreBoard_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  background-color: rgb(214, 241, 141);
+}
+
+.wordGame .wordGame_bottom {
+  display: flex;
+  justify-content: end;
+  gap: 60px;
+  padding: 20px 0px;
+  padding-right: 100px;
+}
+
+.wordCard .pictureCard_image {
+  height: 100%;
+}
+
+.wordCard_bigCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 50%;
+}
+
+.wordCard_bigCard p {
+  position: relative;
+  font-size: 7rem;
+  border: 1px solid black;
+  border-radius: 5%;
+  padding: 20px;
+  box-shadow: 0 10px 0 black;
+  cursor: pointer;
+}
+
+.wordCard_bigCard p.incorrect {
+  animation: 0.3s 4 ease-in alternate incorrect;
+}
+
+@keyframes incorrect {
+  from {
+    top: 0px;
+  }
+  to {
+    top: 10px;
+    box-shadow: 0 0px 0 black;
+    background-color: red;
+  }
+}
+.wordCard_bigCard p.correct {
+  top: 10px;
+  box-shadow: 0 0px 0 black;
+  background-color: #a4f1f5;
+}
+
+.wordCard_bigCard p.bouncing {
+  animation: 0.5s 1 forwards correct-word;
+}
+
+@keyframes correct-word {
+  from {
+    top: 0px;
+  }
+  to {
+    top: 10px;
+    box-shadow: 0 0px 0 black;
+    background-color: #a4f1f5;
+  }
+}
+.wordCard_smallCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 33%;
+}
+
+.wordCard_smallCard p {
+  position: relative;
+  font-size: 5rem;
+  border: 1px solid black;
+  border-radius: 5%;
+  padding: 20px;
+  box-shadow: 0 10px 0 black;
+  cursor: pointer;
+}
+
+.wordCard_smallCard p.incorrect {
+  animation: 0.3s 4 ease-in alternate incorrect;
+}
+
+@keyframes incorrect {
+  from {
+    top: 0px;
+  }
+  to {
+    top: 10px;
+    box-shadow: 0 0px 0 black;
+    background-color: red;
+  }
+}
+.wordCard_smallCard p.correct {
+  top: 10px;
+  box-shadow: 0 0px 0 black;
+  background-color: #a4f1f5;
+}
+
+.wordCard_smallCard p.bouncing {
+  animation: 0.5s 1 forwards correct-word;
+}
+
+@keyframes correct-word {
+  from {
+    top: 0px;
+  }
+  to {
+    top: 10px;
+    box-shadow: 0 0px 0 black;
+    background-color: #a4f1f5;
+  }
+}
+.modal_goodJobDisplay {
+  padding: 20px 80px;
+}
+
+.modal_OptionDisplay {
+  color: black;
+}
+
+.modal_OptionDisplay::backdrop {
+  background-color: rgba(128, 128, 128, 0.674);
+}
+
+.buttonPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0;
+}
+
+.gif_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 400px;
+}
+
+.toggleSwitch {
+  height: 30px;
+  width: 70px;
+  margin-bottom: 20px;
+}
+
+.toggleSwitch input {
+  display: none;
+}
+
+.toggleSwitch input + label {
+  width: 100%;
+  height: 100%;
+}
+
+.toggleSwitch input + label > .status-toggle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: gray;
+  padding: 2px;
+  border-radius: 5px;
+  transition: all 0.5s ease;
+}
+
+.toggleSwitch input + label > .status-toggle::after, .toggleSwitch input + label > .status-toggle::before {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 4px);
+  width: calc(50% - 2px);
+  color: white;
+  transition: all 0.5s ease;
+  border-radius: 5px;
+}
+
+.toggleSwitch input + label > .status-toggle::before {
+  color: black;
+  background-color: white;
+  left: 2px;
+  content: attr(data-unchecked);
+  z-index: 10;
+}
+
+.toggleSwitch input + label > .status-toggle::after {
+  color: white;
+  right: 0;
+  content: attr(data-checked);
+}
+
+.toggleSwitch input:checked + label > .status-toggle {
+  background-color: rgb(129, 215, 1);
+}
+
+.toggleSwitch input:checked + label > .status-toggle::before {
+  color: rgb(129, 215, 1);
+  background-color: white;
+  left: 50%;
+  content: attr(data-checked);
+}
+
+.toggleSwitch input:checked + label > .status-toggle::after {
+  color: white;
+  left: 0;
+  content: attr(data-unchecked);
+}
+
+.imageInputGroup h1 {
+  font-size: 2rem;
+}
+
+.imageInputGroup .imageInputList {
+  list-style-type: none;
+}
+
+.imageInputGroup .imageInputList .imageInputList_item .imageInputList_word {
+  font-size: 1.3rem;
+  color: blue;
+}
+
+.imageInputGroup .imageInputList .imageInputList_item .imageInputList_word.noWord {
+  color: red;
+  font-weight: bolder;
+}
+
+.imageInputGroup .imageInputList .imageInputList_item input[type=file] {
+  display: none;
+}
+
+.imageInputGroup .imageInputList .imageInputList_item label {
+  cursor: pointer;
+  font-size: 1.3rem;
+  text-decoration: underline;
+}
+
+.imageInputGroup .imageInputList .imageInputList_item label:hover {
+  color: blueviolet;
+}
+
+.textInputGroup .wordInput {
+  font-size: 2rem;
+  padding: 5px 2px;
+}
+
+.textInputGroup .wordInput input[type=text] {
+  padding: 0 5px;
+}
+
+.textInputGroup .wordInput input[type=text]::placeholder {
+  color: red;
+}
+
+.textInputGroup .wordInput .deleteButton {
+  appearance: none;
+  background-color: rgb(250, 36, 36);
+  color: white;
+  padding: 0 10px;
+  transition: all 0.2s;
+}
+
+.textInputGroup .wordInput .deleteButton:hover {
+  background-color: rgb(255, 126, 126);
+}
+
+.textInputGroup > .addButtonContainer {
+  text-align: center;
+}
+
+.radioBoxGroup {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.radioBoxGroup .radioBoxGroup_unit {
+  display: flex;
+  gap: 10px;
+}
+
+.radioBoxGroup .radioBoxGroup_unit label {
+  font-size: 1.2rem;
+}
+
+.radioBoxGroup .radioBoxGroup_unit .radioBoxGroup_radioBox {
+  width: 20px;
+}
+
+.optionContainer {
+  padding: 10px;
+}
+
+.optionContainer p {
+  font-size: 1.2rem;
+}
+
+.optionContainer .buttonContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.optionContainer .buttonContainer .returnButton {
+  padding: 10px;
+  min-height: 0;
+}
+
+.pictureCard_bigCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 350px;
+  flex: 1 1 50%;
+}
+
+.pictureCard_bigCard .pictureCard_imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 90%;
+  padding: 5px;
+  border: 0;
+}
+
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard {
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+}
+
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard.correct > .flipcard_inner {
+  animation: 0.5s 1 correct;
+  animation-fill-mode: forwards;
+}
+
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard.correct > .flipcard_inner > .flipcard_back {
+  background: no-repeat url("./assets/happyface.png") center/contain;
+}
+
+@keyframes correct {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard.wrong > .flipcard_inner {
+  animation: 2s 1 wrong;
+}
+
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard.wrong > .flipcard_inner > .flipcard_back {
+  background: no-repeat url("./assets/angryface.png") center/contain;
+}
+
+@keyframes wrong {
+  0% {
+    transform: rotateY(0deg);
+  }
+  33% {
+    transform: rotateY(180deg);
+  }
+  66% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard.selected > .flipcard_inner .flipcard_back, .pictureCard_bigCard .pictureCard_imageContainer .flipcard.unselected > .flipcard_inner .flipcard_back {
+  background: no-repeat url("./assets/happyface.png") center/contain;
+}
+
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard.selected > .flipcard_inner {
+  transform: rotateY(180deg);
+}
+
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard .flipcard_inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all 0.5s;
+}
+
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard .flipcard_inner .flipcard_front,
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard .flipcard_inner .flipcard_back {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  font-size: 12rem;
+}
+
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard .flipcard_inner .flipcard_front img {
+  height: 100%;
+}
+
+.pictureCard_bigCard .pictureCard_imageContainer .flipcard .flipcard_inner .flipcard_back {
+  transform: rotateY(180deg);
+}
+
+.pictureCard_smallCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  flex: 1 1 33%;
+}
+
+.pictureCard_smallCard .pictureCard_imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 90%;
+  padding: 5px;
+  border: 0;
+}
+
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard {
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+}
+
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard.correct > .flipcard_inner {
+  animation: 0.5s 1 correct;
+  animation-fill-mode: forwards;
+}
+
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard.correct > .flipcard_inner > .flipcard_back {
+  background: no-repeat url("./assets/happyface.png") center/contain;
+}
+
+@keyframes correct {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard.wrong > .flipcard_inner {
+  animation: 2s 1 wrong;
+}
+
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard.wrong > .flipcard_inner > .flipcard_back {
+  background: no-repeat url("./assets/angryface.png") center/contain;
+}
+
+@keyframes wrong {
+  0% {
+    transform: rotateY(0deg);
+  }
+  33% {
+    transform: rotateY(180deg);
+  }
+  66% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard.selected > .flipcard_inner .flipcard_back, .pictureCard_smallCard .pictureCard_imageContainer .flipcard.unselected > .flipcard_inner .flipcard_back {
+  background: no-repeat url("./assets/happyface.png") center/contain;
+}
+
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard.selected > .flipcard_inner {
+  transform: rotateY(180deg);
+}
+
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard .flipcard_inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all 0.5s;
+}
+
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard .flipcard_inner .flipcard_front,
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard .flipcard_inner .flipcard_back {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  font-size: 12rem;
+}
+
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard .flipcard_inner .flipcard_front img {
+  height: 100%;
+}
+
+.pictureCard_smallCard .pictureCard_imageContainer .flipcard .flipcard_inner .flipcard_back {
+  transform: rotateY(180deg);
+}
+
+.topWordDisplay {
+  padding: 0 5px;
+  border: 10px black solid;
+}
+
+.topWordDisplay .topWordDisplay_word {
+  font-size: 4.3rem;
+  font-weight: bolder;
+  opacity: 0;
+  transform: translateX(-50px);
+  text-align: center;
+  transition: all 0.8s;
+}
+
+.topWordDisplay .topWordDisplay_word.fadein {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+.topWordDisplay ~ .wordGame_bottom {
+  padding: 5px 100px 10px 0;
+}
+
+/*# sourceMappingURL=App.css.map */

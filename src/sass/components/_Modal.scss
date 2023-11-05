@@ -1,0 +1,20 @@
+@use '../abstract/placeholders' as *;
+
+.modal_goodJobDisplay{
+    @extend %modal;
+    padding: 20px 80px;
+}
+
+.modal_OptionDisplay{
+    @extend %modal;
+    color: black;
+}
+
+.modal_OptionDisplay::backdrop{
+    background-color: rgba(128, 128, 128, 0.674);
+}
+
+
+.modal::backdrop{
+
+}

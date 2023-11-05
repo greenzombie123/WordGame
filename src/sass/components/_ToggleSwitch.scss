@@ -1,0 +1,67 @@
+.toggleSwitch {
+  height: 30px;
+  width: 70px;
+  margin-bottom: 20px;
+
+  input {
+    display: none;
+
+    + label {
+      width: 100%;
+      height: 100%;
+
+      > .status-toggle {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-color: gray;
+        padding: 2px;
+        border-radius: 5px;
+        transition: all 0.5s ease;
+
+        &::after,
+        &::before {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: calc(100% - 4px);
+          width: calc(50% - 2px);
+          color: white;
+          transition: all 0.5s ease;
+          border-radius: 5px;
+        }
+
+        &::before {
+          color: black;
+          background-color: white;
+             left: 2px;
+          content: attr(data-unchecked);
+          z-index: 10;
+        }
+
+        &::after {
+          color: white;
+          right: 0;
+          content: attr(data-checked);
+        }
+      }
+    }
+  }
+  input:checked + label > .status-toggle {
+    background-color: rgb(129, 215, 1);
+
+    &::before {
+      color: rgb(129, 215, 1);
+      background-color: white;
+      left: 50%;
+      content: attr(data-checked);
+    }
+
+    &::after {
+      color: white;
+      left: 0;
+      content: attr(data-unchecked);
+    }
+  }
+}

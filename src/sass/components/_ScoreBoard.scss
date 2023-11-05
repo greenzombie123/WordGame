@@ -1,0 +1,43 @@
+@use "../abstract/mixins" as *;
+
+.scoreBoard {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background-color: rgb(46 46 46 / 96%);
+  padding: 15px 10px;
+
+  .star_4 {
+    @include star(4);
+  }
+
+  .star_5 {
+    @include star(5);
+  }
+
+  .star_6 {
+    @include star(6);
+  }
+
+  .star_7 {
+    @include star(7);
+  }
+
+  .star_8 {
+    @include star(8);
+  }
+
+  .star_9 {
+    @include star(9);
+  }
+
+  .highlighted{
+    background-color: gold;
+  }
+
+  // .star_1 {
+  //   @include star(180px);
+  // }
+}

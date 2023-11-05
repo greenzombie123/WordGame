@@ -1,0 +1,132 @@
+@mixin pictureCard($flex, $height) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $height;
+  // height: 50%;
+
+  flex: $flex;
+
+  .pictureCard_imageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    height: 90%;
+    padding: 5px;
+    border: 0;
+
+    .flipcard {
+      width: 100%;
+      height: 100%;
+      perspective: 1000px;
+
+      &.correct > .flipcard_inner,
+      &.wrong > .flipcard_inner {
+      }
+
+      &.correct > .flipcard_inner {
+        animation: 0.5s 1 correct;
+        animation-fill-mode: forwards;
+
+        & > .flipcard_back {
+          background: no-repeat url("./assets/happyface.png") center/contain;
+        }
+
+        @keyframes correct {
+          from {
+            transform: rotateY(0deg);
+          }
+
+          to {
+            transform: rotateY(180deg);
+          }
+        }
+      }
+
+      &.wrong > .flipcard_inner {
+        animation: 2s 1 wrong;
+
+        & > .flipcard_back {
+          background: no-repeat url("./assets/angryface.png") center/contain;
+        }
+
+        @keyframes wrong {
+          0% {
+            transform: rotateY(0deg);
+          }
+
+          33% {
+            transform: rotateY(180deg);
+          }
+
+          66% {
+            transform: rotateY(180deg);
+          }
+
+          100% {
+            transform: rotateY(0deg);
+          }
+        }
+      }
+
+      &.selected > .flipcard_inner,  &.unselected > .flipcard_inner{
+        .flipcard_back {
+          background: no-repeat url("./assets/happyface.png") center/contain;
+        }
+      }
+
+      &.selected > .flipcard_inner{
+        transform: rotateY(180deg);
+      }
+
+      .flipcard_inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: all .5s;
+
+        .flipcard_front,
+        .flipcard_back {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          backface-visibility: hidden;
+          font-size: 12rem;
+        }
+        .flipcard_front {
+          img {
+            height: 100%;
+          }
+        }
+        .flipcard_back {
+          transform: rotateY(180deg);
+        }
+
+        //   &.happyFace {
+        //     background: no-repeat url("./assets/happyface.png") center/contain;
+        //   }
+
+        //   &.angryFace {
+        //     background: no-repeat url("./assets/angryface.png") center/contain;
+        //   }
+        // }
+      }
+    }
+  }
+}
+
+.pictureCard {
+}
+
+.pictureCard_bigCard {
+  @include pictureCard(1 1 50%, 350px);
+}
+
+.pictureCard_smallCard {
+  @include pictureCard(1 1 33%, 250px);
+}

@@ -1,0 +1,4 @@
+- [ ] Change the CSS of the word cards so it looks like they are floating   
+- [ ] Implement the animations for the word cards
+- [ ] Implement functionality for any mode
+- [ ] Implement Picture Mode 

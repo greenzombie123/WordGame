@@ -1,0 +1,15 @@
+.radioBoxGroup {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  .radioBoxGroup_unit {
+    display: flex;
+    gap: 10px;
+    label {
+      font-size: 1.2rem;
+    }
+    .radioBoxGroup_radioBox {
+        width: 20px;
+    }
+  }
+}

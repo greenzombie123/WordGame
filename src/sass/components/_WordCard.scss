@@ -1,0 +1,16 @@
+@use "../abstract/mixins" as *;
+
+.wordCard {
+  .pictureCard_image{
+    height: 100%
+  }
+}
+
+.wordCard_bigCard {
+  @include wordCard(1 1 50%, 7rem);
+}
+
+.wordCard_smallCard {
+  @include wordCard(1 1 33%, 5rem);
+}
+

@@ -1,0 +1,42 @@
+@use "../abstract/mixins" as *;
+@use "../abstract/placeholders";
+
+.slideShow {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+
+  .slideShow_top {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content:space-between ;
+    padding: 0 20px;
+    flex: 1;
+
+    .slideShowButton_left {
+      @include slideShowButton;
+    }
+
+    .slidesContainer {
+      width: 1600px;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .slideShowButton_right {
+      @include slideShowButton(100px, 0);
+    }
+  }
+
+  .slideShow_bottom {
+    display: flex;
+    justify-content: left;
+    padding: 40px 0;
+    padding-left: 100px;
+
+    button {
+      @extend %commonButton;
+    }
+  }
+}

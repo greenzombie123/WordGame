@@ -1,0 +1,115 @@
+$correctColor: #a4f1f5;
+$box-shadow: 5px 5px 1px gray;
+
+@mixin slideShowButton($left: 0px, $right: 100px) {
+  height: 0;
+  width: 0;
+  border-left: $left solid greenyellow;
+  border-right: $right solid greenyellow;
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  background-color: transparent;
+}
+
+@mixin wordCard($flex, $fontsize) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: $flex;
+
+  p {
+    position: relative;
+    font-size: $fontsize;
+    border: 1px solid black;
+    border-radius: 5%;
+    padding: 20px;
+    box-shadow: 0 10px 0 black;
+    cursor: pointer;
+
+    &.incorrect {
+      animation: 0.3s 4 ease-in alternate incorrect;
+      // animation-fill-mode: forwards;
+
+      @keyframes incorrect {
+        from {
+          top: 0px;
+        }
+        to {
+          top: 10px;
+          box-shadow: 0 0px 0 black;
+          background-color: red;
+        }
+      }
+    }
+
+    &.correct {
+      top: 10px;
+      box-shadow: 0 0px 0 black;
+      background-color: $correctColor;
+    }
+
+    &.bouncing {
+      animation: 0.5s 1 forwards correct-word;
+
+      @keyframes correct-word {
+        from {
+          top: 0px;
+        }
+        to {
+          top: 10px;
+          box-shadow: 0 0px 0 black;
+          background-color: $correctColor;
+        }
+      }
+    }
+  }
+}
+
+@mixin star($numOfWords) {
+  -webkit-clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  background-color: gray;
+
+  @if $numOfWords <= 4 {
+    height: 150px;
+    width: 150px;
+  } @else if $numOfWords == 5 {
+    height: 120px;
+    width: 120px;
+  } @else if $numOfWords == 6 {
+    height: 100px;
+    width: 100px;
+  } @else if $numOfWords == 7 {
+    height: 80px;
+    width: 80px;
+  } @else if $numOfWords == 8 {
+    height: 70px;
+    width: 70px;
+  } @else if $numOfWords == 9 {
+    height: 60px;
+    width: 60px;
+  }
+}

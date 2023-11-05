@@ -1,0 +1,22 @@
+@use "../abstract/placeholders";
+
+.optionContainer {
+    padding: 10px;
+  
+    p {
+      font-size: 1.2rem;
+    }
+  
+    .buttonContainer {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+  
+      .returnButton {
+        @extend %commonButton;
+        padding: 10px;
+        min-height: 0;
+      }
+    }
+  }
+  

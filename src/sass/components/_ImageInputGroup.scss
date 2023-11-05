@@ -1,0 +1,35 @@
+$font-size:1.3rem;
+
+.imageInputGroup {
+  h1 {
+    font-size: 2rem;
+  }
+  .imageInputList {
+    list-style-type: none;
+
+    .imageInputList_item {
+      .imageInputList_word {
+        font-size: $font-size;
+        color: blue;
+
+        &.noWord{
+            color: red;
+            font-weight: bolder;
+        }
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      label {
+        cursor: pointer;
+        font-size: $font-size;
+        text-decoration: underline;
+        &:hover{
+            color: blueviolet;
+        }
+      }
+    }
+  }
+}
