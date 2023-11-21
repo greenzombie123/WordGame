@@ -6,7 +6,7 @@ import { GoodJobModal } from "../GoodJobModal";
 import { PictureCard } from "./PictureCard";
 import { usePictureCardList } from "../../../hooks/usePictureCards";
 import { shuffle } from "lodash";
-import { TopWordDisplay } from "../TopWordDisplay";
+import { TopWordDisplay } from "./TopWordDisplay";
 
 export const PictureGame = ({
   words,

@@ -3,16 +3,22 @@ import "./App.css";
 import github from "./assets/GitHub.png";
 import MainMenu from "./components/MainMenu/MainMenu";
 import SlideShow from "./components/SlideShow/SlideShow";
-import WordGame from "./components/CardGame/WordGame";
+import WordGame from "./components/CardGame/WordGame/WordGame";
 import { useStage } from "./hooks/useStage";
 import { useWords } from "./hooks/useWords";
 import { useImageMode } from "./hooks/useImageMode";
 import { PictureGame } from "./components/CardGame/PictureGame/PictureGame";
 import { useCardGameMode } from "./hooks/useCardGameMode";
+import { useShowPicture } from "./hooks/useShowPicture";
+import { usePictureGameMode } from "./hooks/usePictureGameMode";
+import { ImageInputGroup } from "./components/MainMenu/ImageInputGroup";
+import { Button } from "./components/util/Button";
 
 function App() {
-  const { cardGameMode, cardGameModeOptions } = useCardGameMode("word");
   const [gameMode, setGameMode] = useState("order");
+  const { pictureGameMode, pictureGameModeOptions } =
+    usePictureGameMode("quiz");
+  const { showPicture, showPictureOptions } = useShowPicture("Show Picture");
   const [isNoShuffleMode, setNoShuffleMode] = useState(false);
   const { stage, goToSlideShow, goToWordGame, goToMainMenu } =
     useStage("MainMenu");
@@ -22,8 +28,13 @@ function App() {
     handleChangeWord,
     handleDeleteWord,
     handleAddImage,
+    handleSwapFileDefinition,
+    handleChangeDefinition,
+    handleChangeAllToPicture
   } = useWords(initialWords);
-  const { imageMode, imageModeOptions } = useImageMode("ImageFront");
+  const { cardGameMode, cardGameModeOptions } = useCardGameMode("word", handleChangeAllToPicture);
+  const { imageMode, imageModeOptions, handleSwapSides } =
+    useImageMode("ImageBack");
 
   const handleNoShuffleToggle = () => {
     if (isNoShuffleMode) setNoShuffleMode(false);
@@ -53,19 +64,30 @@ function App() {
             isNoShuffleMode: !isNoShuffleMode,
           }}
           imageModeOptions={imageModeOptions}
-          cardGameModeOptions={cardGameModeOptions}
-        />
+          sideOptions={{ cardGameModeOptions, showPictureOptions }}
+          pictureGameModeOptions={pictureGameModeOptions}
+          errorCheckData={{ showPicture, cardGameMode }}
+        >
+          <ImageInputGroup
+            words={words}
+            onImageAdd={handleAddImage}
+            onPropSwap={handleSwapFileDefinition}
+            onDefinitionChange={handleChangeDefinition}
+            cardGameMode={cardGameMode}
+          />
+        </MainMenu>
       ) : stage === "SlideShow" ? (
         <SlideShow
           words={words}
-          goToMainMenu={goToMainMenu}
-          goToWordGame={goToWordGame}
           imageMode={imageMode}
+          onSwitchSides={handleSwapSides}
+          goToWordGame={goToWordGame}
+          mainMenuButton={<Button onClick={goToMainMenu} text={"Main Menu"} />}
         />
       ) : stage === "Game" && cardGameMode === "picture" ? (
         <PictureGame
           words={words}
-          gameMode={gameMode}
+          gameMode={pictureGameMode}
           goToMainMenu={goToMainMenu}
           goToSlideShow={goToSlideShow}
         />
@@ -73,6 +95,7 @@ function App() {
         <WordGame
           words={words}
           gameMode={gameMode}
+          showPicture={showPicture}
           goToMainMenu={goToMainMenu}
           goToSlideShow={goToSlideShow}
           isNoShuffleMode={isNoShuffleMode}

@@ -97,7 +97,7 @@ p, h1, h2, h3, h4, h5, h6 {
   border-radius: 50%;
 }
 
-.optionContainer .buttonContainer .returnButton, .textInputGroup > .addButtonContainer > .addButton, .buttonPanel button, .wordGame .wordGame_bottom .mainMenuButton, .wordGame .wordGame_bottom .slideShowButton, .slideShow .slideShow_bottom button, .MainMenu .buttonContainer > .finishButton,
+.optionContainer .buttonContainer .returnButton, .textInputGroup > .addButtonContainer > .addButton, .buttonPanel button, .wordGame .topPictureDisplay .topPictureDisplay_buttons .topPictureDisplay_button, .wordGame .wordGame_bottom .mainMenuButton, .wordGame .wordGame_bottom .slideShowButton, .slideShow .slideShow_bottom button, .MainMenu .buttonContainer > .finishButton,
 .MainMenu .buttonContainer > .optionButton {
   appearance: none;
   background-color: transparent;
@@ -125,12 +125,12 @@ p, h1, h2, h3, h4, h5, h6 {
   will-change: transform;
 }
 
-.optionContainer .buttonContainer .returnButton:disabled, .textInputGroup > .addButtonContainer > .addButton:disabled, .buttonPanel button:disabled, .wordGame .wordGame_bottom .mainMenuButton:disabled, .wordGame .wordGame_bottom .slideShowButton:disabled, .slideShow .slideShow_bottom button:disabled, .MainMenu .buttonContainer > .finishButton:disabled,
+.optionContainer .buttonContainer .returnButton:disabled, .textInputGroup > .addButtonContainer > .addButton:disabled, .buttonPanel button:disabled, .wordGame .topPictureDisplay .topPictureDisplay_buttons .topPictureDisplay_button:disabled, .wordGame .wordGame_bottom .mainMenuButton:disabled, .wordGame .wordGame_bottom .slideShowButton:disabled, .slideShow .slideShow_bottom button:disabled, .MainMenu .buttonContainer > .finishButton:disabled,
 .MainMenu .buttonContainer > .optionButton:disabled {
   pointer-events: none;
 }
 
-.optionContainer .buttonContainer .returnButton:hover, .textInputGroup > .addButtonContainer > .addButton:hover, .buttonPanel button:hover, .wordGame .wordGame_bottom .mainMenuButton:hover, .wordGame .wordGame_bottom .slideShowButton:hover, .slideShow .slideShow_bottom button:hover, .MainMenu .buttonContainer > .finishButton:hover,
+.optionContainer .buttonContainer .returnButton:hover, .textInputGroup > .addButtonContainer > .addButton:hover, .buttonPanel button:hover, .wordGame .topPictureDisplay .topPictureDisplay_buttons .topPictureDisplay_button:hover, .wordGame .wordGame_bottom .mainMenuButton:hover, .wordGame .wordGame_bottom .slideShowButton:hover, .slideShow .slideShow_bottom button:hover, .MainMenu .buttonContainer > .finishButton:hover,
 .MainMenu .buttonContainer > .optionButton:hover {
   color: #fff;
   background-color: #1a1a1a;
@@ -138,7 +138,7 @@ p, h1, h2, h3, h4, h5, h6 {
   transform: translateY(-2px);
 }
 
-.optionContainer .buttonContainer .returnButton:active, .textInputGroup > .addButtonContainer > .addButton:active, .buttonPanel button:active, .wordGame .wordGame_bottom .mainMenuButton:active, .wordGame .wordGame_bottom .slideShowButton:active, .slideShow .slideShow_bottom button:active, .MainMenu .buttonContainer > .finishButton:active,
+.optionContainer .buttonContainer .returnButton:active, .textInputGroup > .addButtonContainer > .addButton:active, .buttonPanel button:active, .wordGame .topPictureDisplay .topPictureDisplay_buttons .topPictureDisplay_button:active, .wordGame .wordGame_bottom .mainMenuButton:active, .wordGame .wordGame_bottom .slideShowButton:active, .slideShow .slideShow_bottom button:active, .MainMenu .buttonContainer > .finishButton:active,
 .MainMenu .buttonContainer > .optionButton:active {
   box-shadow: none;
   transform: translateY(0);
@@ -165,14 +165,38 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .MainMenu .MainMenu_top {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  width: 100%;
+  grid-template-columns: 560px auto;
+  width: 90%;
+}
+
+@media (max-width: 1400px) {
+  .MainMenu .MainMenu_top {
+    grid-template-columns: 360px auto;
+  }
+}
+.MainMenu .MainMenu_top .cardGameModeOptions {
+  display: flex;
+  flex-flow: column;
+  margin-top: 6rem;
+}
+
+.MainMenu .MainMenu_top .cardGameModeOptions .cardGameModeOptions_inner h2 {
+  font-size: 1.5rem;
+  width: 65%;
+}
+
+.MainMenu .MainMenu_top .cardGameModeOptions .cardGameModeOptions_inner .cardGameModeOptions_text {
+  font-size: 1.3rem;
 }
 
 .MainMenu .MainMenu_top .inputContainer {
   display: flex;
   flex-flow: row nowrap;
-  gap: 2rem;
+  gap: 1rem;
+  flex: 1;
+}
+
+.MainMenu .MainMenu_top .inputContainer > * {
   flex: 1;
 }
 
@@ -203,7 +227,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .slides .wordSlide .flipcard {
-  min-width: 50%;
+  width: 100%;
   height: 80%;
   perspective: 1000px;
 }
@@ -235,6 +259,13 @@ p, h1, h2, h3, h4, h5, h6 {
 .slides .wordSlide .flipcard .flipcard_inner .flipcard_front img,
 .slides .wordSlide .flipcard .flipcard_inner .flipcard_back img {
   height: 100%;
+}
+
+.slides .wordSlide .flipcard .flipcard_inner .flipcard_front p,
+.slides .wordSlide .flipcard .flipcard_inner .flipcard_back p {
+  font-size: 10rem;
+  text-align: center;
+  line-height: 1;
 }
 
 .slides .wordSlide .flipcard .flipcard_inner .flipcard_back {
@@ -284,9 +315,9 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .slideShow .slideShow_bottom {
   display: flex;
-  justify-content: left;
   padding: 40px 0;
   padding-left: 100px;
+  gap: 30px;
 }
 
 .scoreBoard {
@@ -296,34 +327,10 @@ p, h1, h2, h3, h4, h5, h6 {
   align-items: center;
   border-radius: 20px;
   background-color: rgba(46, 46, 46, 0.96);
-  padding: 15px 10px;
+  padding: 15px 5px;
 }
 
 .scoreBoard .star_4 {
-  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  background-color: gray;
-  height: 150px;
-  width: 150px;
-}
-
-.scoreBoard .star_5 {
-  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  background-color: gray;
-  height: 120px;
-  width: 120px;
-}
-
-.scoreBoard .star_6 {
-  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  background-color: gray;
-  height: 100px;
-  width: 100px;
-}
-
-.scoreBoard .star_7 {
   -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   background-color: gray;
@@ -331,12 +338,36 @@ p, h1, h2, h3, h4, h5, h6 {
   width: 80px;
 }
 
-.scoreBoard .star_8 {
+.scoreBoard .star_5 {
   -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   background-color: gray;
   height: 70px;
   width: 70px;
+}
+
+.scoreBoard .star_6 {
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background-color: gray;
+  height: 60px;
+  width: 60px;
+}
+
+.scoreBoard .star_7 {
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background-color: gray;
+  height: 60px;
+  width: 60px;
+}
+
+.scoreBoard .star_8 {
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background-color: gray;
+  height: 60px;
+  width: 60px;
 }
 
 .scoreBoard .star_9 {
@@ -356,6 +387,63 @@ p, h1, h2, h3, h4, h5, h6 {
   flex-flow: column nowrap;
   justify-content: stretch;
   height: 100%;
+}
+
+.wordGame .topPictureDisplay {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  border: 1px black solid;
+  width: 100%;
+}
+
+.wordGame .topPictureDisplay .topPictureDisplay_buttons {
+  position: absolute;
+  left: 0;
+  margin: 10px 0 0 10px;
+}
+
+.wordGame .topPictureDisplay .topPictureDisplay_buttons .topPictureDisplay_button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  height: 0;
+}
+
+.wordGame .topPictureDisplay .topPictureDisplay_imageContainer {
+  height: 300px;
+  width: 300px;
+}
+
+.wordGame .topPictureDisplay .topPictureDisplay_imageContainer .topPictureDisplay_image {
+  height: 100%;
+  margin: 0 auto;
+}
+
+.wordGame .topPictureDisplay .topPictureDisplay_imageContainer.fadein {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+.wordGame .topPictureDisplay .topPictureDisplay_definitionContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 70%;
+}
+
+.wordGame .topPictureDisplay .topPictureDisplay_definitionContainer .topPictureDisplay_definition {
+  font-size: 5rem;
+}
+
+.wordGame .topPictureDisplay .topPictureDisplay_definitionContainer.fadein {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+.wordGame .topPictureDisplay ~ .wordGame_bottom {
+  padding: 5px 100px 10px 0;
 }
 
 .wordGame .wordGame_top {
@@ -378,7 +466,7 @@ p, h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
+  width: 100px;
   background-color: rgb(214, 241, 141);
 }
 
@@ -403,10 +491,10 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .wordCard_bigCard p {
   position: relative;
-  font-size: 7rem;
+  font-size: 6rem;
   border: 1px solid black;
   border-radius: 5%;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 10px 0 black;
   cursor: pointer;
 }
@@ -425,19 +513,24 @@ p, h1, h2, h3, h4, h5, h6 {
     background-color: red;
   }
 }
-.wordCard_bigCard p.correct {
+.wordCard_bigCard p.correct_permanent {
   top: 10px;
   box-shadow: 0 0px 0 black;
   background-color: #a4f1f5;
 }
 
-.wordCard_bigCard p.bouncing {
-  animation: 0.5s 1 forwards correct-word;
+.wordCard_bigCard p.correct {
+  animation: 0.5s 1 correct-word;
+  top: 10px;
+  box-shadow: 0 0px 0 black;
+  background-color: #a4f1f5;
 }
 
 @keyframes correct-word {
   from {
     top: 0px;
+    box-shadow: 0 10px 0 black;
+    background-color: transparent;
   }
   to {
     top: 10px;
@@ -454,10 +547,10 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .wordCard_smallCard p {
   position: relative;
-  font-size: 5rem;
+  font-size: 4rem;
   border: 1px solid black;
   border-radius: 5%;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 10px 0 black;
   cursor: pointer;
 }
@@ -476,19 +569,24 @@ p, h1, h2, h3, h4, h5, h6 {
     background-color: red;
   }
 }
-.wordCard_smallCard p.correct {
+.wordCard_smallCard p.correct_permanent {
   top: 10px;
   box-shadow: 0 0px 0 black;
   background-color: #a4f1f5;
 }
 
-.wordCard_smallCard p.bouncing {
-  animation: 0.5s 1 forwards correct-word;
+.wordCard_smallCard p.correct {
+  animation: 0.5s 1 correct-word;
+  top: 10px;
+  box-shadow: 0 0px 0 black;
+  background-color: #a4f1f5;
 }
 
 @keyframes correct-word {
   from {
     top: 0px;
+    box-shadow: 0 10px 0 black;
+    background-color: transparent;
   }
   to {
     top: 10px;
@@ -591,36 +689,59 @@ p, h1, h2, h3, h4, h5, h6 {
   content: attr(data-unchecked);
 }
 
-.imageInputGroup h1 {
-  font-size: 2rem;
-}
-
 .imageInputGroup .imageInputList {
   list-style-type: none;
 }
 
-.imageInputGroup .imageInputList .imageInputList_item .imageInputList_word {
+.imageInputGroup .imageInputList .imageInputList_inputContainer {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.imageInputGroup .imageInputList .imageInputList_inputContainer .imageInputList_item {
+  margin-right: 10px;
+}
+
+.imageInputGroup .imageInputList .imageInputList_inputContainer .imageInputList_item .imageInputList_word {
   font-size: 1.3rem;
   color: blue;
 }
 
-.imageInputGroup .imageInputList .imageInputList_item .imageInputList_word.noWord {
+.imageInputGroup .imageInputList .imageInputList_inputContainer .imageInputList_item .imageInputList_word.noWord {
   color: red;
   font-weight: bolder;
 }
 
-.imageInputGroup .imageInputList .imageInputList_item input[type=file] {
+.imageInputGroup .imageInputList .imageInputList_inputContainer .imageInputList_item .imageInputList_definition {
+  font-size: 2rem;
+  margin: 5px 2px;
+  padding: 0 5px;
+  width: 100%;
+}
+
+.imageInputGroup .imageInputList .imageInputList_inputContainer .imageInputList_item input[type=file] {
   display: none;
 }
 
-.imageInputGroup .imageInputList .imageInputList_item label {
+.imageInputGroup .imageInputList .imageInputList_inputContainer .imageInputList_item label {
   cursor: pointer;
   font-size: 1.3rem;
   text-decoration: underline;
 }
 
-.imageInputGroup .imageInputList .imageInputList_item label:hover {
+.imageInputGroup .imageInputList .imageInputList_inputContainer .imageInputList_item label:hover {
   color: blueviolet;
+}
+
+.imageInputGroup .imageInputList .imageInputList_inputContainer .inputButton {
+  width: 20px;
+  height: 20px;
+  background: url("./assets/change.png") center/20px 20px;
+  border: none;
+}
+
+.imageInputGroup .imageInputList .imageInputList_inputContainer .inputButton:hover {
+  border: 1px solid rgb(101, 101, 101);
 }
 
 .textInputGroup .wordInput {
@@ -630,6 +751,7 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .textInputGroup .wordInput input[type=text] {
   padding: 0 5px;
+  width: 85%;
 }
 
 .textInputGroup .wordInput input[type=text]::placeholder {
@@ -673,6 +795,12 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .optionContainer {
   padding: 10px;
+  width: 520px;
+}
+
+.optionContainer h1 {
+  font-size: 1.5rem;
+  text-decoration: underline;
 }
 
 .optionContainer p {
@@ -793,7 +921,7 @@ p, h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 250px;
+  height: 225px;
   flex: 1 1 33%;
 }
 
@@ -909,6 +1037,25 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .topWordDisplay ~ .wordGame_bottom {
   padding: 5px 100px 10px 0;
+}
+
+.popUp {
+  position: fixed;
+  font-size: 1.3rem;
+  box-shadow: 1px 1px 1px black;
+  background-color: antiquewhite;
+  padding: 0 3px;
+}
+
+@media (max-width: 1000px) {
+  .popUp {
+    background-color: blue;
+  }
+}
+@media (min-width: 1000px) {
+  .popUp {
+    background-color: red;
+  }
 }
 
 /*# sourceMappingURL=App.css.map */

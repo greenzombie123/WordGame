@@ -1,0 +1,19 @@
+.popUp{
+    position: fixed;
+    font-size: 1.3rem;
+    box-shadow: 1px 1px 1px black;
+    background-color: antiquewhite;
+    padding: 0 3px;
+
+    @media (max-width:1000px){
+        &{
+            background-color: blue;
+        }
+    }
+
+    @media (min-width:1000px){
+        &{
+            background-color: red;
+        }
+    }
+}

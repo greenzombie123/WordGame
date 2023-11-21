@@ -31,9 +31,10 @@
 
   .slideShow_bottom {
     display: flex;
-    justify-content: left;
+    // justify-content: left;
     padding: 40px 0;
     padding-left: 100px;
+    gap: 30px;
 
     button {
       @extend %commonButton;

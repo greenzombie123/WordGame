@@ -1,32 +1,25 @@
-export function ImageInputGroup({ words, onImageAdd }) {
+import { DefinitionInput } from "./DefinitionInput";
+import { ImageInput } from "./ImageInput";
+import { InputButton } from "./InputButton";
+
+export function ImageInputGroup({ words, onImageAdd, onPropSwap, onDefinitionChange, cardGameMode }) {
   return (
     <div className="imageInputGroup">
-      {/* <h1>Add Pictures</h1> */}
       <ul className="imageInputList">
-        {words.map((word) => (
-          <li className="imageInputList_item" key={word.id}>
-            <p className={`imageInputList_word ${word.word !== "" ? "" : "noWord"}`}>
-              {word.word ? word.word : "No Word Typed"}
-            </p>
-            <input
-              type="file"
-              name={`image${word.id}`}
-              id={`image${word.id}`}
-              onChange={onImageAdd(word.id)}
-            />
-            <label htmlFor={`image${word.id}`}>
-              {word.file ? "Image Added!" : "Attach An Image"}
-            </label>
-          </li>
-        ))}
+        {words.map((word) => {
+          const props = Object.keys(word);
+          const hasFile = props.some((prop) => "file" === prop);
+          const hasDefinition = props.some((prop) => "definition" === prop);
+          if (hasFile) return <div className="imageInputList_inputContainer" key={word.id}>
+            <ImageInput word={word} onImageAdd={onImageAdd}/>
+            {cardGameMode === "word" && <InputButton onPropSwap={onPropSwap(word.id)}/>}
+          </div>;
+          else if(hasDefinition) return <div className="imageInputList_inputContainer" key={word.id}>
+          <DefinitionInput word={word} onDefinitionChange={onDefinitionChange}/>
+          {cardGameMode === "word" && <InputButton onPropSwap={onPropSwap(word.id)}/>}
+        </div>;
+        })}
       </ul>
     </div>
   );
 }
-
-// div
-//      h1
-//      ul
-//         li
-//            p -> word
-//            filepicker label -> NoImage / ImageAdded

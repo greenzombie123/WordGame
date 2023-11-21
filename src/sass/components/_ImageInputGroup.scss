@@ -1,33 +1,58 @@
-$font-size:1.3rem;
+$font-size: 1.3rem;
 
 .imageInputGroup {
-  h1 {
-    font-size: 2rem;
-  }
+  
+  
+
   .imageInputList {
     list-style-type: none;
 
-    .imageInputList_item {
-      .imageInputList_word {
-        font-size: $font-size;
-        color: blue;
+    .imageInputList_inputContainer {
+      display: flex;
+      flex-flow: row nowrap;
 
-        &.noWord{
+      .imageInputList_item {
+        margin-right: 10px;
+
+        .imageInputList_word {
+          font-size: $font-size;
+          color: blue;
+
+          &.noWord {
             color: red;
             font-weight: bolder;
+          }
+        }
+
+        .imageInputList_definition {
+          font-size: 2rem;
+          margin: 5px 2px;
+          padding: 0 5px;
+          width: 100%;
+        }
+
+        input[type="file"] {
+          display: none;
+        }
+
+        label {
+          cursor: pointer;
+          font-size: $font-size;
+          text-decoration: underline;
+          &:hover {
+            color: blueviolet;
+          }
         }
       }
 
-      input[type="file"] {
-        display: none;
-      }
+      .inputButton {
+        width: 20px;
+        height: 20px;
+        background: url("./assets/change.png") center/20px 20px;
+        border: none;
 
-      label {
-        cursor: pointer;
-        font-size: $font-size;
-        text-decoration: underline;
-        &:hover{
-            color: blueviolet;
+        &:hover {
+          border: 1px solid rgb(101, 101, 101);
         }
       }
     }

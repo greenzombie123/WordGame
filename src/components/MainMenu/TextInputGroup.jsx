@@ -2,7 +2,7 @@ const TextInputGroup = ({
   words,
   onChange,
   onDeleteButtonClick,
-  onAddButtonClick,
+  onAddButtonClick
 }) => {
   const hasDeleteButtons = words.length > 2;
   const notMaxWords = words.length !== 9;
@@ -17,6 +17,7 @@ const TextInputGroup = ({
             name={`word-${word.id}`}
             id={`word-${word.id}`}
             onChange={onChange(word.id)}
+            placeholder={word !== "" ? "Type a word" : ""}
           />
           {hasDeleteButtons && (
             <button

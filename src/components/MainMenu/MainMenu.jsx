@@ -6,8 +6,11 @@ import { TextInputGroup } from "./TextInputGroup";
 import { ImageInputGroup } from "./ImageInputGroup";
 import { Options } from "./Options";
 import { CardGameModeOptions } from "./CardGameModeOptions";
+import { usePopUp } from "../../hooks/usePopUp";
+import { PopUp } from "../util/PopUp";
 
 function MainMenu({
+  children,
   words,
   goToSlideShow,
   goToWordGame,
@@ -17,49 +20,66 @@ function MainMenu({
   onWordChange,
   onAddButtonClick,
   onDeleteButtonClick,
-  onImageAdd,
   imageModeOptions,
-  cardGameModeOptions,
+  sideOptions,
+  pictureGameModeOptions,
+  errorCheckData,
 }) {
   const { handleCloseModal, handleOpenModal, modalRef } = useModal();
+  const { isOpen, popUpRef, handleOpenPopUp, message, handleMessage } =
+    usePopUp();
+  const { showPicture, cardGameMode } = errorCheckData;
 
   const handleGoToSlideShow = () => {
-    if (isWordsEmpty()) handleEmptyWords();
+    if (handleErrorCheck()) handleError();
     else goToSlideShow();
   };
 
   const handleGoToGame = () => {
-    if (isWordsEmpty()) handleEmptyWords();
+    if (handleErrorCheck()) handleError();
     else goToWordGame();
   };
 
+  const handleErrorCheck = () =>
+    isWordsEmpty() ||
+    (isPictureGame() && hasNoImage()) ||
+    (isShowPicture() && hasNoImage());
+
+  const handleError = () => {
+    if (isWordsEmpty()) handleEmptyWords();
+    else if (isPictureGame() && hasNoPicture()) {
+      handleOpenPopUp();
+      handleMessage(
+        "Must add a picture to all words if card game is in picture mode"
+      );
+    } else if (isShowPicture() && hasNoImage()) {
+      handleOpenPopUp();
+      handleMessage(
+        "Must add a picture or a definition to all words if you want to display either one during the card game in word mode"
+      );
+    }
+  };
+
   const handleEmptyWords = () => {
-    let inputs = document.querySelectorAll(".wordInput > input");
-    inputs = Array.from(inputs, (input) => input);
-    const emptyInputs = inputs.filter((input) => input.value === "");
-
-    emptyInputs.forEach((emptyInput) => {
-      emptyInput.placeholder = "Type A Word";
-    });
-
-    setTimeout(() => {
-      emptyInputs.forEach((emptyInput) => {
-        emptyInput.placeholder = "";
-      });
-    }, 3000);
+    handleOpenPopUp();
+    handleMessage("Please write the words in the empty spaces");
   };
 
-  const isWordsEmpty = () => {
-    let inputs = document.querySelectorAll(".wordInput > input");
-    inputs = Array.from(inputs, (input) => input);
-    return inputs.some((input) => input.value === "");
-  };
+  const isWordsEmpty = () => words.some((word) => word.word === "");
+
+  const hasNoPicture = () => words.some((word) => !word.file);
+
+  const hasNoImage = () => words.some((word) => !word.file && !word.definition);
+
+  const isShowPicture = () => showPicture === "Show Picture";
+
+  const isPictureGame = () => cardGameMode === "picture";
 
   return (
     <>
       <div className="MainMenu">
         <div className="MainMenu_top">
-          <CardGameModeOptions options={cardGameModeOptions} />
+          <CardGameModeOptions options={sideOptions} />
           <div className="inputContainer">
             <TextInputGroup
               words={words}
@@ -67,7 +87,7 @@ function MainMenu({
               onDeleteButtonClick={onDeleteButtonClick}
               onChange={onWordChange}
             />
-            <ImageInputGroup words={words} onImageAdd={onImageAdd} />
+            {children}
           </div>
         </div>
 
@@ -75,7 +95,11 @@ function MainMenu({
           <button className="finishButton" onClick={handleGoToSlideShow}>
             SlideShow
           </button>
-          <button className="finishButton" onClick={handleGoToGame}>
+          <button
+            className="finishButton"
+            onClick={handleGoToGame}
+            ref={popUpRef}
+          >
             Game
           </button>
           <button className="optionButton" onClick={handleOpenModal}>
@@ -84,6 +108,8 @@ function MainMenu({
         </div>
       </div>
 
+      <PopUp isOpen={isOpen} message={message} popUpref={popUpRef} />
+
       <Options
         modalRef={modalRef}
         onGameModeToggle={onGameModeToggle}
@@ -91,28 +117,8 @@ function MainMenu({
         isToggled={isToggled}
         handleCloseModal={handleCloseModal}
         imageModeOptions={imageModeOptions}
+        pictureGameModeOptions={pictureGameModeOptions}
       />
-      {/* <Modal modalRef={modalRef} className="modal_OptionDisplay">
-        <div className="optionContainer">
-          <p className="optionText">Press cards by word order</p>
-          <ToggleSwitch
-            id={1}
-            onToggleClick={onGameModeToggle}
-            isToggled={isToggled.gameMode}
-          />
-          <p className="optionText">Shuffle cards when you press a card</p>
-          <ToggleSwitch
-            id={2}
-            onToggleClick={onNoShuffleToggle}
-            isToggled={isToggled.isNoShuffleMode}
-          />
-          <div className="buttonContainer">
-            <button className="returnButton" onClick={handleCloseModal}>
-              Return
-            </button>
-          </div>
-        </div>
-      </Modal> */}
     </>
   );
 }

@@ -5,54 +5,62 @@ import { v4 as uuidv4 } from "uuid";
 export const useWordCards = (words) => {
   const [wordCards, setWordCards] = useState(() => makeWordCards(words));
 
-  const handleChangeStatus = (id, status) => {
+  const handleResetWordCards = () => {
+    setWordCards(makeWordCards(words));
+  };
+
+  const handleClickCurrentWord = (id) => {
     setWordCards(
       wordCards.map((wordCard) => {
-        if (id === wordCard.id) return { ...wordCard, status: status };
+        if (wordCard.id === id) return { ...wordCard, wasUsed: true };
         else return wordCard;
       })
     );
   };
 
-  const handleRandomizeWordCards = () => {
+  const handleUnClick = (id) => {
     setWordCards(
-      shuffle(
-        wordCards.map((wordCard) => {
-          if (wordCard.status === "incorrect")
-            return { ...wordCard, status: "" };
-          else if (wordCard.status === "bouncing")
-            return { ...wordCard, status: "correct" };
-          else return wordCard;
-        })
-      )
+      wordCards.map((wordCard) => {
+        if (wordCard.id === id) return { ...wordCard, wasUsed: false };
+        else return wordCard;
+      })
     );
   };
 
-  const handleResetWordCards = () => {
-    setWordCards(
-      shuffle(
-        wordCards.map((wordCard) => {
-          return { ...wordCard, status: "" };
-        })
-      )
-    );
-  };
+  // const handleKeepCorrect = () => {
+  //   setWordCards(
+  //     wordCards.map((wordCard) => {
+  //       if (wordCard.wasUsed)
+  //         return { ...wordCard, status: "correct_permanent" };
+  //       else return wordCard;
+  //     })
+  //   );
+  // };
 
-  // const handle
+  const handleRandomizeCards = () => {
+    setWordCards(shuffle(wordCards));
+  };
 
   return {
     wordCards,
-    handleChangeStatus,
-    handleRandomizeWordCards,
     handleResetWordCards,
+    handleClickCurrentWord,
+    handleUnClick,
+    handleRandomizeCards,
   };
 };
 
 const makeWordCards = (words) => {
-  return words.map((word) => ({
-    word: word.word,
-    id: uuidv4(),
-    file: word.file,
-    status: "",
-  }));
+  return shuffle(
+    words.map((word) => ({
+      word: word.word,
+      id: uuidv4(),
+      // file: word.file,
+      wasUsed: false,
+      status: "",
+      [word.file ? "file" : "definition"]: word.file
+        ? word.file
+        : word.definition,
+    }))
+  );
 };

@@ -23,7 +23,7 @@ $box-shadow: 5px 5px 1px gray;
     font-size: $fontsize;
     border: 1px solid black;
     border-radius: 5%;
-    padding: 20px;
+    padding: 10px;
     box-shadow: 0 10px 0 black;
     cursor: pointer;
 
@@ -43,18 +43,23 @@ $box-shadow: 5px 5px 1px gray;
       }
     }
 
-    &.correct {
+    &.correct_permanent {
       top: 10px;
       box-shadow: 0 0px 0 black;
       background-color: $correctColor;
     }
 
-    &.bouncing {
-      animation: 0.5s 1 forwards correct-word;
+    &.correct {
+      animation: 0.5s 1 correct-word;
+      top: 10px;
+      box-shadow: 0 0px 0 black;
+      background-color: $correctColor;
 
       @keyframes correct-word {
         from {
           top: 0px;
+          box-shadow: 0 10px 0 black;
+          background-color: transparent;
         }
         to {
           top: 10px;
@@ -94,20 +99,20 @@ $box-shadow: 5px 5px 1px gray;
   background-color: gray;
 
   @if $numOfWords <= 4 {
-    height: 150px;
-    width: 150px;
-  } @else if $numOfWords == 5 {
-    height: 120px;
-    width: 120px;
-  } @else if $numOfWords == 6 {
-    height: 100px;
-    width: 100px;
-  } @else if $numOfWords == 7 {
     height: 80px;
     width: 80px;
-  } @else if $numOfWords == 8 {
+  } @else if $numOfWords == 5 {
     height: 70px;
     width: 70px;
+  } @else if $numOfWords == 6 {
+    height: 60px;
+    width: 60px;
+  } @else if $numOfWords == 7 {
+    height: 60px;
+    width: 60px;
+  } @else if $numOfWords == 8 {
+    height: 60px;
+    width: 60px;
   } @else if $numOfWords == 9 {
     height: 60px;
     width: 60px;

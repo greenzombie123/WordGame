@@ -5,6 +5,7 @@ export const useImageMode = (initialMode) => {
 
   const handleChangeToImageFront = () => setImageMode("ImageFront");
   const handleChangeToImageBack = () => setImageMode("ImageBack");
+  const handleSwapSides = ()=> setImageMode(imageMode === "ImageFront" ? "ImageBack" : "ImageFront")
 
   const imageModeOptions = {
     currentState: imageMode,
@@ -24,5 +25,5 @@ export const useImageMode = (initialMode) => {
     ],
   };
 
-  return { imageMode, imageModeOptions };
+  return { imageMode, imageModeOptions, handleSwapSides };
 };

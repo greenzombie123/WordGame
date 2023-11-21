@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import ScoreBoard from "./ScoreBoard";
+import ScoreBoard from "../ScoreBoard";
 import WordCard from "./WordCard";
-import { useModal } from "../../hooks/useModal";
-import { useGif } from "../../hooks/useGif";
-import { GoodJobModal } from "./GoodJobModal";
-import { useWordCards } from "../../hooks/useWordCards";
+import { useModal } from "../../../hooks/useModal";
+import { useGif } from "../../../hooks/useGif";
+import { GoodJobModal } from "../GoodJobModal";
+import { useWordCards } from "../../../hooks/useWordCards";
 import { shuffle } from "lodash";
+import { TopPictureDisplay } from "./TopPictureDisplay";
+import { WordGameBottom } from "./WordGameBottom";
 
 function WordGame({
   words,
@@ -13,14 +15,16 @@ function WordGame({
   goToSlideShow,
   goToMainMenu,
   isNoShuffleMode,
+  showPicture,
 }) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [score, setScore] = useState(0);
   const {
     wordCards,
-    handleChangeStatus,
-    handleRandomizeWordCards,
+    handleClickCurrentWord,
     handleResetWordCards,
+    handleRandomizeCards,
+    handleUnClick,
   } = useWordCards(words);
   const [currentWord, setCurrentWord] = useState(wordCards[0]);
   const { gif } = useGif();
@@ -28,8 +32,8 @@ function WordGame({
 
   const resetWordGame = () => {
     setScore(0);
+    handleAnimationStop();
     handleResetWordCards();
-    handleFirstCurrentWord();
     handleCloseModal();
   };
 
@@ -39,96 +43,112 @@ function WordGame({
   const handleDecreaseScore = () => setScore(score - 1);
   const handleIsOrderMode = () => gameMode === "order";
   const handleIsAnyMode = () => gameMode === "any";
-  const handleIsPictureMode = () => gameMode === "picture";
   const handleIsWinGame = () => score === wordCards.length;
   const handleWinGame = () => {
     setTimeout(() => {
       handleOpenModal();
     }, 500);
   };
+
   const handleWasClicked = (id) =>
     wordCards.some(
-      (wordCard) => wordCard.id === id && wordCard.status === "correct"
+      (wordCard) => wordCard.id === id && wordCard.wasUsed === true
     );
-  const handleNewCurrentWord = (id) => {
+
+  const handleNewCurrentWord = () => {
     let unusedWordCards = wordCards.filter(
-      (wordCard) => wordCard.status !== "correct" && wordCard.id !== id
+      (wordCard) => wordCard.wasUsed !== true
     );
 
     if (unusedWordCards.length === 0) return;
 
     const newWordCard = shuffle(unusedWordCards)[0];
-    setCurrentWord({
-      word: newWordCard.word,
-      id: newWordCard.id,
-      file: newWordCard.file,
-    });
+    setCurrentWord(newWordCard);
   };
 
   const handleFirstCurrentWord = () => {
     const newWordCard = shuffle(wordCards)[0];
-    setCurrentWord({
-      word: newWordCard.word,
-      id: newWordCard.id,
-      file: newWordCard.file,
-    });
+    setCurrentWord(newWordCard);
   };
 
   const handleAnimationStop = () => {
     setIsAnimating(false);
   };
 
-  const handleCardClick = (id) => {
+  const handleStartAnimation = () => {
+    setIsAnimating(true);
+  };
+
+  const handleCardClick = (id, handleCorrect, handleIncorrect, handleReset) => {
     const isOrderMode = handleIsOrderMode();
     const isAnyMode = handleIsAnyMode();
-    const isPictureMode = handleIsPictureMode();
     const wasClicked = handleWasClicked(id);
     const isWin = handleIsWinGame();
-
     if (isWin || isAnimating) return;
-    if (isOrderMode) {
+
+    if (isAnyMode && !showPicture) {
+      if (wasClicked) {
+        handleDecreaseScore();
+        handleUnClick(id);
+        handleReset();
+      } else {
+        handleIncrementScore();
+        handleClickCurrentWord(id);
+        handleCorrect();
+        handleStartAnimation();
+      }
+    } else if (isOrderMode) {
       if (wasClicked) return;
       else {
         const isCorrect = handleAnswerCheck(id);
         if (isCorrect) {
           handleIncrementScore();
-          handleChangeStatus(id, "bouncing");
-          handleNewCurrentWord(id);
+          handleClickCurrentWord(id);
+          handleStartAnimation();
+          handleCorrect();
         } else {
-          handleChangeStatus(id, "incorrect");
+          handleIncorrect();
         }
       }
     }
   };
 
   useEffect(() => {
-    const isWin = handleIsWinGame();
-    if (isWin) handleWinGame();
-  }, [score]);
-
-  // Randomize after an animation is played
-  useEffect(() => {
-    if (!isNoShuffleMode && score !== 0) {
+    if (isAnimating) {
       setTimeout(() => {
-        if (score !== wordCards.length) handleRandomizeWordCards();
         handleAnimationStop();
+        handleNewCurrentWord();
+        if (!isNoShuffleMode) handleRandomizeCards();
       }, 500);
     }
+  }, [isAnimating]);
+
+  useEffect(() => {
+    const isWin = handleIsWinGame();
+    if (isWin) handleWinGame();
+    if (score === 0) handleFirstCurrentWord();
   }, [score]);
 
   return (
     <>
       <div className="wordGame">
+        {showPicture === "Show Picture" && (
+          <TopPictureDisplay
+            newCurrentWord={currentWord}
+            goToMainMenu={goToMainMenu}
+            goToSlideShow={goToSlideShow}
+          />
+        )}
         <div className="wordGame_top">
           <div className="wordGame_container">
-            {wordCards.map((wordCard, index) => (
+            {wordCards.map((wordCard) => (
               <WordCard
                 numOfCards={words.length}
                 word={wordCard.word}
-                key={index}
+                key={wordCard.id}
                 callback={handleCardClick}
                 id={wordCard.id}
-                status={wordCard.status}
+                isCorrect={wordCard.wasUsed}
               />
             ))}
           </div>
@@ -136,14 +156,12 @@ function WordGame({
             <ScoreBoard score={score} numOfWords={words.length} />
           </div>
         </div>
-        <div className="wordGame_bottom">
-          <button className="mainMenuButton" onClick={goToMainMenu}>
-            Main Menu
-          </button>
-          <button className="slideShowButton" onClick={goToSlideShow}>
-            Slide Show
-          </button>
-        </div>
+        {showPicture === "No Picture" && (
+          <WordGameBottom
+            goToMainMenu={goToMainMenu}
+            goToSlideShow={goToSlideShow}
+          />
+        )}
       </div>
 
       <GoodJobModal

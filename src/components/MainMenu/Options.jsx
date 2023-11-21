@@ -8,11 +8,24 @@ export const Options = ({
   isToggled,
   onNoShuffleToggle,
   handleCloseModal,
-  imageModeOptions
+  imageModeOptions,
+  pictureGameModeOptions,
 }) => {
+  const { currentState: pictureGameMode } = pictureGameModeOptions;
+  const pictureModeDescription =
+    pictureGameMode === "quiz"
+      ? "Choose the correct picture card based on the word being shown"
+      : "Choose any card of any order";
+
   return (
     <Modal modalRef={modalRef} className="modal_OptionDisplay">
       <div className="optionContainer">
+        <h1>Picture Card Game Options</h1>
+        <p className="optionText">
+          {pictureModeDescription}
+        </p>
+        <RadioBoxGroup options={pictureGameModeOptions} />
+        <h1>Word Card Game Options</h1>
         <p className="optionText">Press cards by word order</p>
         <ToggleSwitch
           id={1}
@@ -25,10 +38,11 @@ export const Options = ({
           onToggleClick={onNoShuffleToggle}
           isToggled={isToggled.isNoShuffleMode}
         />
-        <p className="optionText">Place image on the front or backside of a slide</p>
-        <RadioBoxGroup
-          options={imageModeOptions}
-        />
+        <h1>SlideShow Options</h1>
+        <p className="optionText">
+          Place image on the front or backside of a slide
+        </p>
+        <RadioBoxGroup options={imageModeOptions} />
         <div className="buttonContainer">
           <button className="returnButton" onClick={handleCloseModal}>
             Return
