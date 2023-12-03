@@ -30,6 +30,8 @@ export const useWords = (initialWords) => {
   const handleChangeAllToPicture = () =>
     wordsDispatch({ type: "changedAllToPicture" });
 
+  const handleLoadWords = (words)=> wordsDispatch({type:"loadedWords", words:words})
+
   return {
     words,
     handleAddWord,
@@ -38,7 +40,8 @@ export const useWords = (initialWords) => {
     handleAddImage,
     handleSwapFileDefinition,
     handleChangeDefinition,
-    handleChangeAllToPicture
+    handleChangeAllToPicture,
+    handleLoadWords
   };
 };
 
@@ -116,6 +119,10 @@ function wordsReducer(words, action) {
           file: null,
         };
       });
+    }
+
+    case "loadedWords":{
+      return [...action.words]
     }
 
     default:

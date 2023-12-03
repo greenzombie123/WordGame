@@ -13,6 +13,7 @@ import { useShowPicture } from "./hooks/useShowPicture";
 import { usePictureGameMode } from "./hooks/usePictureGameMode";
 import { ImageInputGroup } from "./components/MainMenu/ImageInputGroup";
 import { Button } from "./components/util/Button";
+import { wordDatabase } from "./modules/wordDatabase";
 
 function App() {
   const [gameMode, setGameMode] = useState("order");
@@ -30,11 +31,16 @@ function App() {
     handleAddImage,
     handleSwapFileDefinition,
     handleChangeDefinition,
-    handleChangeAllToPicture
+    handleChangeAllToPicture,
+    handleLoadWords,
   } = useWords(initialWords);
-  const { cardGameMode, cardGameModeOptions } = useCardGameMode("word", handleChangeAllToPicture);
+  const { cardGameMode, cardGameModeOptions } = useCardGameMode(
+    "word",
+    handleChangeAllToPicture
+  );
   const { imageMode, imageModeOptions, handleSwapSides } =
     useImageMode("ImageBack");
+  const database = wordDatabase({ handleLoadWords }); 
 
   const handleNoShuffleToggle = () => {
     if (isNoShuffleMode) setNoShuffleMode(false);
@@ -67,6 +73,7 @@ function App() {
           sideOptions={{ cardGameModeOptions, showPictureOptions }}
           pictureGameModeOptions={pictureGameModeOptions}
           errorCheckData={{ showPicture, cardGameMode }}
+          database={database}
         >
           <ImageInputGroup
             words={words}

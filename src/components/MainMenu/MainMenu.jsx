@@ -24,11 +24,13 @@ function MainMenu({
   sideOptions,
   pictureGameModeOptions,
   errorCheckData,
+  database
 }) {
   const { handleCloseModal, handleOpenModal, modalRef } = useModal();
   const { isOpen, popUpRef, handleOpenPopUp, message, handleMessage } =
     usePopUp();
   const { showPicture, cardGameMode } = errorCheckData;
+  const {loadDatabase, updateDatabase} = database
 
   const handleGoToSlideShow = () => {
     if (handleErrorCheck()) handleError();
@@ -74,6 +76,10 @@ function MainMenu({
   const isShowPicture = () => showPicture === "Show Picture";
 
   const isPictureGame = () => cardGameMode === "picture";
+
+  useEffect(() => {
+    loadDatabase()
+  }, []);
 
   return (
     <>
